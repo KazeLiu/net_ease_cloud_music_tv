@@ -1,3 +1,6 @@
+
+import 'dart:io';
+
 import 'package:event_bus/event_bus.dart';
 
 EventBus kazeEventBus = EventBus();
@@ -21,8 +24,6 @@ class ChangeCookie {
     });
 
     // 暂时只需要这一个 现在只给这个
-    return [
-      {'MUSIC_U': cookieList['MUSIC_U']}
-    ];
+    return Cookie("MUSIC_U", cookieList['MUSIC_U']!);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:net_ease_cloud_music_tv/model/playlist/playlist.dart';
 import 'package:net_ease_cloud_music_tv/page/home/main.dart';
 
 import 'package:net_ease_cloud_music_tv/page/login/main.dart';
@@ -8,6 +9,7 @@ class KazeRouter {
     "/": (context) => LoginByQR(),
     LoginByQR.routerName: (ctx) => LoginByQR(),
     Home.routerName: (ctx) => Home(),
+    PlayList.routerName: (ctx) => PlayList(),
   };
 
   /// 添加页面后记得在上面加上 不然就会直接跳转到404

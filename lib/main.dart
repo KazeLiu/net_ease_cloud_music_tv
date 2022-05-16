@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         builder: (ctx, child) {
           return Scaffold(
             body: Container(
-              color: const Color(0xFF2B2B2B),
+              color: const Color(0xFF212124),
               child: child!,
             ),
           );

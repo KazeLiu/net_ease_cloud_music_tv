@@ -1,13 +1,14 @@
+import 'dart:io';
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:net_ease_cloud_music_tv/request/serverBaseUrl.dart';
 import 'package:net_ease_cloud_music_tv/tool/eventbus.dart';
 
 class HttpConfig {
   static const serverBaseUrl = kazeServerBaseUrl;
   static const timeout = 5000;
-  static Map<String, dynamic> headers = {
-    "Content-Type": "application/json;charset=UTF-8",
-  };
+  static Map<String, dynamic> headers = {};
 }
 
 class HttpClass {
@@ -15,10 +16,13 @@ class HttpClass {
     init();
   }
 
+  static final CookieJar cookieJar = CookieJar();
+
   init() {
     kazeEventBus.on<ChangeCookie>().listen((event) {
-      cookie = event.stringCookieToMap();
-      print(cookie);
+      List<Cookie> cookies = [event.stringCookieToMap()];
+      cookieJar.saveFromResponse(Uri.parse(HttpConfig.serverBaseUrl), cookies);
+      print(cookies);
     });
   }
 
@@ -49,6 +53,8 @@ class HttpClass {
     }
     try {
       dio.interceptors.add(_dInter());
+
+      dio.interceptors.add(CookieManager(cookieJar));
       print("请求 ${dio.options.baseUrl}$url");
       Response response = await dio.request(
         url,
@@ -64,7 +70,6 @@ class HttpClass {
   static InterceptorsWrapper _dInter() {
     return InterceptorsWrapper(
       onRequest: (options, handler) {
-        options.headers['cookie'] = cookie;
         return handler.next(options);
       },
       onResponse: (response, handler) {

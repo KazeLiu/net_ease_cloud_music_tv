@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:net_ease_cloud_music_tv/page/login/main.dart';
+import 'package:net_ease_cloud_music_tv/page/home/home_user_card.dart';
 import 'package:net_ease_cloud_music_tv/provider/user_provider.dart';
 import 'package:net_ease_cloud_music_tv/request/user_info_request.dart';
 import 'package:net_ease_cloud_music_tv/tool/color.dart';
-import 'package:net_ease_cloud_music_tv/tool/persistence.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/user/user_account_model.dart';
@@ -49,90 +48,17 @@ class _HomeState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   // 登录信息
-                  Card(
-                    clipBehavior: Clip.hardEdge,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(130),
-                                child: Image.network(
-                                  data.userAccountModel.profile!.avatarUrl!,
-                                  width: 130,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    data.userAccountModel.profile!.nickname!,
-                                    style: KazeFontStyles.text30,
-                                  ),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text(
-                                    data.userAccountModel.profile!.userId
-                                        .toString(),
-                                    style: KazeFontStyles.text20,
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                        Stack(
-                          children: [
-                            Container(
-                              height: 160,
-                              width: 600,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                      data.userAccountModel.profile!
-                                          .backgroundUrl!,
-                                    ),
-                                    fit: BoxFit.cover,
-                                    alignment:Alignment.topCenter
-                                    // 完全填充
-                                    ),
-                              ),
-                            ),
-                            Container(
-                              height: 160,
-                              width: 600,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.centerLeft,
-                                  end: Alignment.centerRight,
-                                  colors: [
-                                    Colors.white.withOpacity(1.0),
-                                    Colors.white.withOpacity(0.9),
-                                    Colors.white.withOpacity(0.8),
-                                    Colors.white.withOpacity(0.2),
-                                    Colors.white.withOpacity(0.1),
-                                    Colors.white.withOpacity(0.1),
-                                    Colors.white.withOpacity(0.1),
-                                    Colors.white.withOpacity(0.1),
-                                    Colors.transparent,
-                                  ],
-                                ),
-                                color: Colors.red,
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
+                  UserDetail(data),
                   // 歌单信息
-                  Row(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _iconAndTitle(0xe637, "我喜欢的音乐"),
+                      _iconAndTitle(0xe61c, "我创建的歌单"),
+                      _iconAndTitle(0xe62f, "我收藏的歌单"),
+                      _iconAndTitle(0xe8a6, "更多")
+                    ],
+                  ),
                 ],
               ),
             );
@@ -142,27 +68,33 @@ class _HomeState extends State<Home> {
     );
   }
 
-  _imageAndTitle(imageUrl, title) {
-    return Card(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(130),
-            child: Image.network(
-              imageUrl,
-              width: 130,
+  _iconAndTitle(iconName, title) {
+    return Container(
+      height: 300,
+      width: 300,
+      child: Card(
+        color: const Color(0xFF2B2B2B),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(130),
+              child: Icon(
+                IconData(iconName, fontFamily: 'iconfont'),
+                size: 100,
+                color: KazeColors.FontColor,
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            title,
-            style: KazeFontStyles.text20CW,
-          ),
-        ],
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              title,
+              style: KazeFontStyles.text30C,
+            ),
+          ],
+        ),
       ),
     );
   }

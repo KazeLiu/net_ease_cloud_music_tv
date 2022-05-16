@@ -1,0 +1,37 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "866488",
+      "name": "表单",
+      "font_class": "biaodan",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "866509",
+      "name": "收藏",
+      "font_class": "shoucang",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "866517",
+      "name": "喜欢",
+      "font_class": "xihuan",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
+      "icon_id": "2076328",
+      "name": "更多",
+      "font_class": "gengduo",
+      "unicode": "e8a6",
+      "unicode_decimal": 59558
+    }
+  ]
+}
