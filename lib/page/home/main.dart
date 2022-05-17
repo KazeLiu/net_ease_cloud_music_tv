@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:net_ease_cloud_music_tv/page/home/home_user_card.dart';
+import 'package:net_ease_cloud_music_tv/page/login/main.dart';
 import 'package:net_ease_cloud_music_tv/provider/user_provider.dart';
 import 'package:net_ease_cloud_music_tv/request/user_info_request.dart';
 import 'package:net_ease_cloud_music_tv/tool/color.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/user/user_account_model.dart';
+import '../../tool/persistence.dart';
 import '../playlist/main.dart';
 
 class Home extends StatefulWidget {
@@ -30,8 +32,8 @@ class _HomeState extends State<Home> {
       Provider.of<UserProvider>(context, listen: false).userAccountModel = data;
     } else {
       print("没获取到");
-      // await KazePreferences().saveString(key: 'cookie', value: "");
-      // Navigator.pushNamed(context, LoginByQR.routerName);
+      await KazePreferences().saveString(key: 'cookie', value: "");
+      Navigator.pushNamed(context, LoginByQR.routerName);
     }
   }
 

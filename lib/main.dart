@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:net_ease_cloud_music_tv/provider/play_provider.dart';
 import 'package:net_ease_cloud_music_tv/provider/user_provider.dart';
 import 'package:net_ease_cloud_music_tv/router/router.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<UserProvider>(
           create: (_) => UserProvider(),
+        ),
+        ChangeNotifierProvider<PlayProvider>(
+          create: (_) => PlayProvider(),
         )
       ],
       child: MaterialApp(

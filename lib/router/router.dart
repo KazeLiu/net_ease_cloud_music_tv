@@ -3,6 +3,8 @@ import 'package:net_ease_cloud_music_tv/page/home/main.dart';
 import 'package:net_ease_cloud_music_tv/page/login/main.dart';
 import 'package:net_ease_cloud_music_tv/page/playlist/main.dart';
 
+import '../page/playlist/list_detail.dart';
+
 class KazeRouter {
   static final Map<String, WidgetBuilder> routes = {
     "/": (context) => LoginByQR(),
@@ -10,6 +12,8 @@ class KazeRouter {
     Home.routerName: (ctx) => Home(),
     PlayList.routerName: (context, {arguments}) =>
         PlayList(listType: arguments),
+    ListDetail.routerName: (context, {arguments}) =>
+        ListDetail(playListId: arguments),
   };
 
   static Route routeGenerator(RouteSettings settings) {

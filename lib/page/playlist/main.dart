@@ -6,6 +6,7 @@ import 'package:net_ease_cloud_music_tv/tool/color.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/user_provider.dart';
+import 'list_detail.dart';
 
 class PlayList extends StatefulWidget {
   PlayList({Key? key, required this.listType}) : super(key: key);
@@ -66,12 +67,16 @@ class _PlayListState extends State<PlayList> {
             Expanded(
               child: ListView(
                 children: List.generate(
-                  (data.userPlaylistModelType!.playlist == null)
+                  (data.userPlaylistModelType.playlist == null)
                       ? 0
                       : data.userPlaylistModelType.playlist!.length,
                   (index) {
                     var listInfo = data.userPlaylistModelType.playlist![index];
                     return ListTile(
+                      onTap: () {
+                        Navigator.pushNamed(context, ListDetail.routerName,
+                            arguments: listInfo.id);
+                      },
                       title: Text(
                         listInfo.name!,
                         style: KazeFontStyles.text20CW,
