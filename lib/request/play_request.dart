@@ -1,5 +1,6 @@
 import 'package:net_ease_cloud_music_tv/model/playlist/play_detail_model.dart';
 
+import '../model/playlist/play_listen_model.dart';
 import '../model/playlist/song_detail_model.dart';
 import 'main.dart';
 
@@ -23,6 +24,17 @@ class PlayRequest {
       return SongDetailModel.fromJson(data.data);
     } else {
       return SongDetailModel();
+    }
+  }
+
+  static getListenUrl(id) async {
+    final url = "/song/url?br=999000&id=$id";
+    print("请求歌曲播放地址");
+    ResponseData data = await HttpClass.get(url);
+    if (!data.error) {
+      return PlayListenModel.fromJson(data.data);
+    } else {
+      return PlayListenModel();
     }
   }
 }
