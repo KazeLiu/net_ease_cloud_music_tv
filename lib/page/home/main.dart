@@ -6,6 +6,7 @@ import 'package:net_ease_cloud_music_tv/tool/color.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/user/user_account_model.dart';
+import '../playlist/main.dart';
 
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
@@ -53,10 +54,10 @@ class _HomeState extends State<Home> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _iconAndTitle(0xe637, "我喜欢的音乐"),
-                      _iconAndTitle(0xe61c, "我创建的歌单"),
-                      _iconAndTitle(0xe62f, "我收藏的歌单"),
-                      _iconAndTitle(0xe8a6, "更多")
+                      _iconAndTitle(0xe637, "心动模式", 0),
+                      _iconAndTitle(0xe61c, "我创建的歌单", 1),
+                      _iconAndTitle(0xe62f, "我收藏的歌单", 2),
+                      // _iconAndTitle(0xe8a6, "更多",0)
                     ],
                   ),
                 ],
@@ -68,32 +69,40 @@ class _HomeState extends State<Home> {
     );
   }
 
-  _iconAndTitle(iconName, title) {
-    return Container(
+  _iconAndTitle(iconName, title, type) {
+    return SizedBox(
       height: 300,
       width: 300,
-      child: Card(
-        color: const Color(0xFF2B2B2B),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(130),
-              child: Icon(
-                IconData(iconName, fontFamily: 'iconfont'),
-                size: 100,
-                color: KazeColors.FontColor,
+      child: GestureDetector(
+        onTap: () {
+          if (type == 1 || type == 2) {
+            Navigator.of(context)
+                .pushNamed(PlayList.routerName, arguments: {type: type});
+          }
+        },
+        child: Card(
+          color: const Color(0xFF2B2B2B),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(130),
+                child: Icon(
+                  IconData(iconName, fontFamily: 'iconfont'),
+                  size: 100,
+                  color: KazeColors.FontColor,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              title,
-              style: KazeFontStyles.text30C,
-            ),
-          ],
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                title,
+                style: KazeFontStyles.text30C,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,33 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:net_ease_cloud_music_tv/model/playlist/playlist.dart';
 import 'package:net_ease_cloud_music_tv/page/home/main.dart';
-
 import 'package:net_ease_cloud_music_tv/page/login/main.dart';
+import 'package:net_ease_cloud_music_tv/page/playlist/main.dart';
 
 class KazeRouter {
   static final Map<String, WidgetBuilder> routes = {
     "/": (context) => LoginByQR(),
     LoginByQR.routerName: (ctx) => LoginByQR(),
     Home.routerName: (ctx) => Home(),
-    PlayList.routerName: (ctx) => PlayList(),
+    PlayList.routerName: (context, {arguments}) => PlayList(
+          listType: arguments,
+        ),
   };
 
-  /// 添加页面后记得在上面加上 不然就会直接跳转到404
   static Route routeGenerator(RouteSettings settings) {
+    //String? 表示name为可空类型
     final String? name = settings.name;
-    final Function? pageBuilder = routes[name];
-    if (pageBuilder != null) {
+    //Function? 表示pageContentBuilder为可空类型
+    final Function? pageContentBuilder = routes[name];
+    if (pageContentBuilder != null) {
       if (settings.arguments != null) {
-        // 如果传了参数
-        return MaterialPageRoute(
+        final Route route = MaterialPageRoute(
             builder: (context) =>
-                pageBuilder(context, arguments: settings.arguments));
+                pageContentBuilder(context, arguments: settings.arguments));
+        return route;
       } else {
-        // 没有传参数
-        return MaterialPageRoute(builder: (context) => pageBuilder(context));
+        final Route route = MaterialPageRoute(
+            builder: (context) => pageContentBuilder(context));
+        return route;
       }
+    } else {
+      return MaterialPageRoute(builder: (context) => Home());
     }
-    return MaterialPageRoute(builder: (context) => pageBuilder!(context));
-    // return MaterialPageRoute(builder: (context) => DunError(error: "404"));
   }
 }

@@ -26,16 +26,20 @@ class MyApp extends StatelessWidget {
         title: '网易云音乐TV超级青春版',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          brightness: Brightness.dark,
         ),
         builder: (ctx, child) {
-          return Scaffold(
-            body: Container(
-              color: const Color(0xFF212124),
-              child: child!,
+          return SafeArea(
+            child: Scaffold(
+              body: Container(
+                color: const Color(0xFF212124),
+                child: child!,
+              ),
             ),
           );
         },
         routes: KazeRouter.routes,
+        // onGenerateRoute: KazeRouter.routeGenerator,
         initialRoute: "/",
       ),
     );

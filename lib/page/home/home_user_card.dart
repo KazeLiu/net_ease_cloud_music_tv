@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../provider/user_provider.dart';
 import '../../tool/color.dart';
+
 Card UserDetail(UserProvider data) {
   return Card(
+    color: const Color(0xFF2C2C2C),
     clipBehavior: Clip.hardEdge,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -26,15 +28,14 @@ Card UserDetail(UserProvider data) {
                 children: [
                   Text(
                     data.userAccountModel.profile!.nickname!,
-                    style: KazeFontStyles.text30,
+                    style: KazeFontStyles.text30CW,
                   ),
                   const SizedBox(
                     width: 20,
                   ),
                   Text(
-                    data.userAccountModel.profile!.userId
-                        .toString(),
-                    style: KazeFontStyles.text20,
+                    data.userAccountModel.profile!.userId.toString(),
+                    style: KazeFontStyles.text20C,
                   ),
                 ],
               )
@@ -49,13 +50,12 @@ Card UserDetail(UserProvider data) {
               decoration: BoxDecoration(
                 image: DecorationImage(
                     image: NetworkImage(
-                      data.userAccountModel.profile!
-                          .backgroundUrl!,
+                      data.userAccountModel.profile!.backgroundUrl!,
                     ),
                     fit: BoxFit.cover,
-                    alignment:Alignment.topCenter
-                  // 完全填充
-                ),
+                    alignment: Alignment.topCenter
+                    // 完全填充
+                    ),
               ),
             ),
             Container(
@@ -66,14 +66,14 @@ Card UserDetail(UserProvider data) {
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: [
-                    Colors.white.withOpacity(1.0),
-                    Colors.white.withOpacity(0.9),
-                    Colors.white.withOpacity(0.8),
-                    Colors.white.withOpacity(0.2),
-                    Colors.white.withOpacity(0.1),
-                    Colors.white.withOpacity(0.1),
-                    Colors.white.withOpacity(0.1),
-                    Colors.white.withOpacity(0.1),
+                    const Color(0xFF2C2C2C).withOpacity(1.0),
+                    const Color(0xFF2C2C2C).withOpacity(0.9),
+                    const Color(0xFF2C2C2C).withOpacity(0.8),
+                    const Color(0xFF2C2C2C).withOpacity(0.2),
+                    const Color(0xFF2C2C2C).withOpacity(0.1),
+                    const Color(0xFF2C2C2C).withOpacity(0.1),
+                    const Color(0xFF2C2C2C).withOpacity(0.1),
+                    const Color(0xFF2C2C2C).withOpacity(0.1),
                     Colors.transparent,
                   ],
                 ),

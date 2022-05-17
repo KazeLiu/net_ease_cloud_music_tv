@@ -17,8 +17,10 @@ class KazeFontStyles {
   static const text18 = TextStyle(fontSize: 18);
   static const text20 = TextStyle(fontSize: 20);
   static const text30 = TextStyle(fontSize: 30);
-  static const text12B = TextStyle(fontSize: 12, color: Colors.black45);
-  static const text14B = TextStyle(fontSize: 14, color: Colors.black45);
+  static const text12B = TextStyle(fontSize: 12, color: Colors.black87);
+  static const text14B = TextStyle(fontSize: 14, color: Colors.black87);
+  static const text20B = TextStyle(fontSize: 20, color: Colors.black87);
+  static const text30B = TextStyle(fontSize: 30, color: Colors.black87);
 
   static const text20CW = TextStyle(
       fontSize: 20, color: KazeColors.FontColor, fontWeight: FontWeight.bold);
