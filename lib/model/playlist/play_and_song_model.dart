@@ -17,6 +17,9 @@ class PlayAndSongModel {
   //  数量
   int? playlistNumber;
 
+  //  图片
+  String? playlistImage;
+
   //  歌曲列表
   List<PlayDetailSongDetailModel>? playDetailSongDetailModel;
 }
