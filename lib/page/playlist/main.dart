@@ -20,6 +20,7 @@ class _PlayListState extends State<PlayList> {
   @override
   initState() {
     _getIDList();
+    _typeToTitle();
     super.initState();
   }
 
@@ -29,7 +30,22 @@ class _PlayListState extends State<PlayList> {
     UserPlaylistModel userPlaylistModel =
         await UserInfoRequest.getUserPlayList(userAccountModel.account?.id);
     userProvider.userPlaylist = userPlaylistModel;
-    userProvider.setUserPlaylistModelInType(1, userAccountModel.account?.id);
+    userProvider.setUserPlaylistModelInType(
+        widget.listType, userAccountModel.account?.id);
+  }
+
+  String listTitle = "";
+
+  _typeToTitle() {
+    if (widget.listType == 1) {
+      setState(() {
+        listTitle = "我创建的歌单";
+      });
+    } else if (widget.listType == 2) {
+      setState(() {
+        listTitle = "我收藏的歌单";
+      });
+    }
   }
 
   @override
@@ -41,13 +57,9 @@ class _PlayListState extends State<PlayList> {
             // title
             Padding(
               padding: const EdgeInsets.all(10),
-              child: Row(
-                children: const [
-                  Text(
-                    "我创建的歌单",
-                    style: KazeFontStyles.text30CW,
-                  )
-                ],
+              child: Text(
+                listTitle,
+                style: KazeFontStyles.text30CW,
               ),
             ),
             // lies
@@ -69,7 +81,7 @@ class _PlayListState extends State<PlayList> {
                         style: KazeFontStyles.text16C,
                       ),
                       leading: Image.network(listInfo.coverImgUrl!),
-                      trailing: Text("共${listInfo.playCount}首歌曲"),
+                      trailing: Text("共${listInfo.trackCount}首歌曲"),
                     );
                   },
                 ),

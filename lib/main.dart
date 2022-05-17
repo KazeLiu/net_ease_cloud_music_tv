@@ -38,8 +38,8 @@ class MyApp extends StatelessWidget {
             ),
           );
         },
-        routes: KazeRouter.routes,
-        // onGenerateRoute: KazeRouter.routeGenerator,
+        // routes: KazeRouter.routes,
+        onGenerateRoute: KazeRouter.routeGenerator,
         initialRoute: "/",
       ),
     );

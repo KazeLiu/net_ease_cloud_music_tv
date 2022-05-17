@@ -76,8 +76,11 @@ class _HomeState extends State<Home> {
       child: GestureDetector(
         onTap: () {
           if (type == 1 || type == 2) {
+            // Navigator.of(context)
+            //     .pushNamed(PlayList.routerName, arguments: {type: type});
+
             Navigator.of(context)
-                .pushNamed(PlayList.routerName, arguments: {type: type});
+                .pushNamed(PlayList.routerName, arguments: type);
           }
         },
         child: Card(

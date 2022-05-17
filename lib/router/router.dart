@@ -8,9 +8,8 @@ class KazeRouter {
     "/": (context) => LoginByQR(),
     LoginByQR.routerName: (ctx) => LoginByQR(),
     Home.routerName: (ctx) => Home(),
-    PlayList.routerName: (context, {arguments}) => PlayList(
-          listType: arguments,
-        ),
+    PlayList.routerName: (context, {arguments}) =>
+        PlayList(listType: arguments),
   };
 
   static Route routeGenerator(RouteSettings settings) {
