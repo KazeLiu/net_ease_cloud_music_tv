@@ -21,6 +21,8 @@ class PlayProvider with ChangeNotifier {
     _playAndSongModel.playlistName = playDetailModel.playlist?.name;
     _playAndSongModel.playlistAuthorName =
         playDetailModel.playlist?.creator?.nickname;
+    _playAndSongModel.playlistAuthorImage =
+        playDetailModel.playlist?.creator?.avatarUrl;
     _playAndSongModel.playlistCreateTime = DateTime.fromMillisecondsSinceEpoch(
             playDetailModel.playlist!.createTime!)
         .toString();

@@ -5,6 +5,9 @@ class PlayAndSongModel {
   //  创建人
   String? playlistAuthorName;
 
+  //  创建人头像
+  String? playlistAuthorImage;
+
   //  创建时间
   String? playlistCreateTime;
 

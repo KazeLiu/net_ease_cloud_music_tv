@@ -14,11 +14,13 @@ Card UserDetail(UserProvider data) {
           padding: const EdgeInsets.all(10),
           child: Row(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(130),
-                child: Image.network(
-                  data.userAccountModel.profile!.avatarUrl!,
-                  width: 130,
+              SizedBox(
+                height: 130,
+                width: 130,
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    data.userAccountModel.profile!.avatarUrl!,
+                  ),
                 ),
               ),
               const SizedBox(

@@ -72,18 +72,32 @@ class _ListDetailState extends State<ListDetail> {
                                 data.playAndSongModel.playlistName!,
                                 style: KazeFontStyles.text30CW,
                               ),
-                              Text(
-                                  '创建人：${data.playAndSongModel.playlistAuthorName}',
-                                  style: KazeFontStyles.text20C),
+                              const SizedBox(
+                                height: 2,
+                              ),
+                              Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundImage: NetworkImage(data
+                                        .playAndSongModel.playlistAuthorImage!),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                      '创建人：${data.playAndSongModel.playlistAuthorName}',
+                                      style: KazeFontStyles.text20C),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 2,
+                              ),
                               Text(
                                   '创建时间：${data.playAndSongModel.playlistCreateTime}',
                                   style: KazeFontStyles.text18C),
-                              data.playAndSongModel.playlistDescription != null
-                                  ? Text(
-                                      data.playAndSongModel
-                                          .playlistDescription!,
-                                      style: KazeFontStyles.text12B)
-                                  : Container()
+                              const SizedBox(
+                                height: 2,
+                              ),
                             ],
                           )
                         ],
