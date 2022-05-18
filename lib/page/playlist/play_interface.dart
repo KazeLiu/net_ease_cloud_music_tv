@@ -23,7 +23,7 @@ class _PlayInterfaceState extends State<PlayInterface> {
   initState() {
     // 判断是否在播放 在播放就不请求 没播放就请求播放
     _playOneSong();
-    _getSongListen();
+    // _getSongListen();
     super.initState();
   }
 

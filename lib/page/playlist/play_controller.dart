@@ -25,10 +25,10 @@ class _PlayControllerState extends State<PlayController> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PlayProvider>(
+    return Selector<PlayProvider, PlayDetailSongDetailModel>(
+      selector: (context, model) => model.playingSongData,
       builder: (ctx, data, _) {
-        PlayDetailSongDetailModel playingSongData = data.playingSongData;
-        return playingSongData.songName == null
+        return data.songName == null
             ? Container()
             : Column(
                 children: [
@@ -46,7 +46,7 @@ class _PlayControllerState extends State<PlayController> {
                         Expanded(
                           child: Row(
                             children: [
-                              Image.network(playingSongData.songImage!),
+                              Image.network(data.songImage!),
                               const SizedBox(
                                 width: 20,
                               ),
@@ -55,14 +55,14 @@ class _PlayControllerState extends State<PlayController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    playingSongData.songName!,
+                                    data.songName!,
                                     style: KazeFontStyles.text20CW,
                                     textAlign: TextAlign.left,
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                   ),
                                   Text(
-                                    '${playingSongData.songAuthorName}',
+                                    '${data.songAuthorName}',
                                     style: KazeFontStyles.text16CW,
                                     overflow: TextOverflow.ellipsis,
                                   )

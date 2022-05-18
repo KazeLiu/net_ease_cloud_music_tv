@@ -60,7 +60,6 @@ class PlayProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
   //  歌曲信息
   PlayListenModel _playListenModel = PlayListenModel();
 
@@ -78,6 +77,7 @@ class PlayProvider with ChangeNotifier {
 
   set playingSongData(PlayDetailSongDetailModel value) {
     _playingSongData = value;
-    notifyListeners();
+    Future.delayed(Duration(milliseconds: 200))
+        .then((value) => notifyListeners());
   }
 }
