@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:net_ease_cloud_music_tv/page/playlist/play_interface.dart';
 import 'package:net_ease_cloud_music_tv/request/play_request.dart';
 import 'package:net_ease_cloud_music_tv/tool/color.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/playlist/play_and_song_model.dart';
 import '../../model/playlist/play_detail_model.dart';
+import '../../model/playlist/play_listen_model.dart';
 import '../../model/playlist/song_detail_model.dart';
 import '../../provider/play_provider.dart';
 
@@ -26,14 +28,19 @@ class _ListDetailState extends State<ListDetail> {
 
   _loadListDetail() async {
     var playProvider = Provider.of<PlayProvider>(context, listen: false);
+    // 获取歌单
     PlayDetailModel playDetail =
         await PlayRequest.getPlayDetail(widget.playListId);
     SongDetailModel songDetail = SongDetailModel();
+    PlayListenModel playListenModel = PlayListenModel();
+    // 歌单内歌曲IDS
     List<int?>? list = playDetail.playlist?.trackIds?.map((e) => e.id).toList();
     if (list != null && list.isNotEmpty) {
       songDetail = await PlayRequest.getSongDetail(list.join(','));
+      playListenModel = await PlayRequest.getListenUrl(list.join(','));
     }
-    playProvider.setPlayAndSongModel(playDetail, songDetail);
+    // 绑定 歌单 歌曲 播放的URL
+    playProvider.setPlayAndSongModel(playDetail, songDetail, playListenModel);
   }
 
   @override
@@ -130,91 +137,100 @@ class _ListDetailState extends State<ListDetail> {
                           PlayDetailSongDetailModel playDetailSongDetailModel =
                               data.playAndSongModel
                                   .playDetailSongDetailModel![index];
-                          return Card(
-                            child: Stack(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                          playDetailSongDetailModel.songImage!,
-                                        ),
-                                        fit: BoxFit.cover,
-                                        alignment: Alignment.center
-                                        // 完全填充
-                                        ),
-                                  ),
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.bottomCenter,
-                                      end: Alignment.topCenter,
-                                      colors: [
-                                        const Color(0xFF2C2C2C)
-                                            .withOpacity(1.0),
-                                        const Color(0xFF2C2C2C)
-                                            .withOpacity(0.9),
-                                        const Color(0xFF2C2C2C)
-                                            .withOpacity(0.8),
-                                        const Color(0xFF2C2C2C)
-                                            .withOpacity(0.2),
-                                        const Color(0xFF2C2C2C)
-                                            .withOpacity(0.1),
-                                        const Color(0xFF2C2C2C)
-                                            .withOpacity(0.1),
-                                        const Color(0xFF2C2C2C)
-                                            .withOpacity(0.1),
-                                        const Color(0xFF2C2C2C)
-                                            .withOpacity(0.1),
-                                        Colors.transparent,
-                                      ],
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                  PlayInterface.routerName,
+                                  arguments: index);
+                            },
+                            child: Card(
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                            playDetailSongDetailModel
+                                                .songImage!,
+                                          ),
+                                          fit: BoxFit.cover,
+                                          alignment: Alignment.center
+                                          // 完全填充
+                                          ),
                                     ),
                                   ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        playDetailSongDetailModel.songTime!,
-                                        style: KazeFontStyles.text26C,
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.bottomCenter,
+                                        end: Alignment.topCenter,
+                                        colors: [
+                                          const Color(0xFF2C2C2C)
+                                              .withOpacity(1.0),
+                                          const Color(0xFF2C2C2C)
+                                              .withOpacity(0.9),
+                                          const Color(0xFF2C2C2C)
+                                              .withOpacity(0.8),
+                                          const Color(0xFF2C2C2C)
+                                              .withOpacity(0.2),
+                                          const Color(0xFF2C2C2C)
+                                              .withOpacity(0.1),
+                                          const Color(0xFF2C2C2C)
+                                              .withOpacity(0.1),
+                                          const Color(0xFF2C2C2C)
+                                              .withOpacity(0.1),
+                                          const Color(0xFF2C2C2C)
+                                              .withOpacity(0.1),
+                                          Colors.transparent,
+                                        ],
                                       ),
-                                      Text(playDetailSongDetailModel.songName!,
-                                          style: KazeFontStyles.text20CW,
-                                          softWrap: true,
-                                          textAlign: TextAlign.left,
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 3),
-                                      Text(
-                                          playDetailSongDetailModel
-                                              .songAuthorName!,
-                                          style: KazeFontStyles.text18C,
-                                          softWrap: true,
-                                          textAlign: TextAlign.left,
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1),
-                                      // Text(playDetailSongDetailModel.songAlbum!,
-                                      //     style: KazeFontStyles.text16C,
-                                      //     softWrap: true,
-                                      //     textAlign: TextAlign.left,
-                                      //     overflow: TextOverflow.ellipsis,
-                                      //     maxLines: 1),
-                                      playDetailSongDetailModel.songAlia == ""
-                                          ? Container()
-                                          : Text(
-                                              playDetailSongDetailModel
-                                                  .songAlia!,
-                                              style: KazeFontStyles.text16C,
-                                              overflow: TextOverflow.ellipsis,
-                                              softWrap: true,
-                                              textAlign: TextAlign.left,
-                                              maxLines: 1),
-                                    ],
-                                  ),
-                                  alignment: Alignment.bottomLeft,
-                                )
-                              ],
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          playDetailSongDetailModel.songTime!,
+                                          style: KazeFontStyles.text26C,
+                                        ),
+                                        Text(
+                                            playDetailSongDetailModel.songName!,
+                                            style: KazeFontStyles.text20CW,
+                                            softWrap: true,
+                                            textAlign: TextAlign.left,
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 3),
+                                        Text(
+                                            playDetailSongDetailModel
+                                                .songAuthorName!,
+                                            style: KazeFontStyles.text18C,
+                                            softWrap: true,
+                                            textAlign: TextAlign.left,
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1),
+                                        // Text(playDetailSongDetailModel.songAlbum!,
+                                        //     style: KazeFontStyles.text16C,
+                                        //     softWrap: true,
+                                        //     textAlign: TextAlign.left,
+                                        //     overflow: TextOverflow.ellipsis,
+                                        //     maxLines: 1),
+                                        playDetailSongDetailModel.songAlia == ""
+                                            ? Container()
+                                            : Text(
+                                                playDetailSongDetailModel
+                                                    .songAlia!,
+                                                style: KazeFontStyles.text16C,
+                                                overflow: TextOverflow.ellipsis,
+                                                softWrap: true,
+                                                textAlign: TextAlign.left,
+                                                maxLines: 1),
+                                      ],
+                                    ),
+                                    alignment: Alignment.bottomLeft,
+                                  )
+                                ],
+                              ),
                             ),
                           );
                         },

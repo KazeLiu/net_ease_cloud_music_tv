@@ -1,9 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.neteasecloudmusictv.kaze.net_ease_cloud_music_tv">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="net_ease_cloud_music_tv"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -48,4 +48,7 @@ class PlayDetailSongDetailModel {
 
   //  时长
   String? songTime;
+
+  //  播放地址
+  String? playUrl;
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:net_ease_cloud_music_tv/page/playlist/play_controller.dart';
 import 'package:net_ease_cloud_music_tv/provider/play_provider.dart';
 import 'package:net_ease_cloud_music_tv/provider/user_provider.dart';
 import 'package:net_ease_cloud_music_tv/router/router.dart';
@@ -9,11 +11,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.landscapeLeft]);
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+
+  static final kazePlayer = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<PlayProvider>(
           create: (_) => PlayProvider(),
-        )
+        ),
       ],
       child: MaterialApp(
         title: '网易云音乐TV超级青春版',
@@ -37,7 +41,17 @@ class MyApp extends StatelessWidget {
             child: Scaffold(
               body: Container(
                 color: const Color(0xFF212124),
-                child: child!,
+                child: Column(
+                  children: [
+                    Expanded(child: child!),
+                    const SizedBox(
+                      height: 100,
+                      // color: Colors.red,
+                      width: double.infinity,
+                      child: PlayController(),
+                    )
+                  ],
+                ),
               ),
             ),
           );

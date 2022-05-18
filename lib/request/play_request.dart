@@ -27,8 +27,8 @@ class PlayRequest {
     }
   }
 
-  static getListenUrl(id) async {
-    final url = "/song/url?br=999000&id=$id";
+  static getListenUrl(ids) async {
+    final url = "/song/url?br=999000&id=$ids";
     print("请求歌曲播放地址");
     ResponseData data = await HttpClass.get(url);
     if (!data.error) {
