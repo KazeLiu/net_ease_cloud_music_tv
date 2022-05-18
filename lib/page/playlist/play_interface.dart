@@ -8,7 +8,7 @@ import '../../request/play_request.dart';
 
 class PlayInterface extends StatefulWidget {
   PlayInterface({Key? key, required this.songIndex}) : super(key: key);
-  static String routerName = "/playController";
+  static String routerName = "/playInterface";
   int songIndex;
 
   @override
@@ -22,7 +22,10 @@ class _PlayInterfaceState extends State<PlayInterface> {
   @override
   initState() {
     // 判断是否在播放 在播放就不请求 没播放就请求播放
-    _playOneSong();
+    if (kazePlayer.playerState.playing) {
+    } else {
+      _playOneSong();
+    }
     // _getSongListen();
     super.initState();
   }
@@ -30,96 +33,64 @@ class _PlayInterfaceState extends State<PlayInterface> {
 //  加载单首歌
   _playOneSong() async {
     var playProvider = Provider.of<PlayProvider>(context, listen: false);
-    model = playProvider
+    playProvider.playingSongData = playProvider
         .playAndSongModel.playDetailSongDetailModel![widget.songIndex];
-    playProvider.playingSongData = model;
     await kazePlayer.setUrl(model.playUrl!);
+    await kazePlayer.play();
   }
 
 //  加载歌单
   _playListSong() async {}
 
-  //  监听
-  _getSongListen() {
-    kazePlayer.playerStateStream.listen((state) {
-      print(state.playing.toString());
-      print(state.processingState.toString());
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Consumer<PlayProvider>(
-      builder: (ctx, data, _) {
-        return Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              Column(
+    return Selector<PlayProvider, PlayDetailSongDetailModel>(
+      selector: (ctx, data) => data.playingSongData,
+      shouldRebuild: (oldData, newData) => true,
+      builder: (ctx, data, _) => data.songImage == null
+          ? const Center(
+              child: Text("loading"),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
                 children: [
-                  Text(
-                    model.songName!,
-                    style: KazeFontStyles.text36CW,
+                  Column(
+                    children: [
+                      Text(
+                        data.songName!,
+                        style: KazeFontStyles.text36CW,
+                      ),
+                      Text(
+                        '${data.songAuthorName} - ${data.songAlbum}',
+                        style: KazeFontStyles.text20C,
+                      )
+                    ],
                   ),
-                  Text(
-                    '${model.songAuthorName} - ${model.songAlbum}',
-                    style: KazeFontStyles.text20C,
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: SizedBox(
-                      width: 300,
-                      height: 300,
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          model.songImage!,
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: SizedBox(
+                          width: 300,
+                          height: 300,
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                              data.songImage!,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      // Expanded(flex: 1, child: Text("歌词"))
+                    ],
                   ),
-                  // Expanded(flex: 1, child: Text("歌词"))
                 ],
               ),
-              // const SizedBox(
-              //   height: 40,
-              // ),
-              // Text("评论")
-              // Row(
-              //   children: [
-              //     ElevatedButton(
-              //         onPressed: () async {
-              //           await kazePlayer.play();
-              //         },
-              //         child: Text("播放")),
-              //     ElevatedButton(
-              //         onPressed: () async {
-              //           await kazePlayer.pause();
-              //         },
-              //         child: Text("暂停")),
-              //     ElevatedButton(
-              //         onPressed: () async {
-              //           await kazePlayer.stop();
-              //         },
-              //         child: Text("停止")),
-              //     ElevatedButton(
-              //         onPressed: () async {
-              //           await kazePlayer.seek(Duration(milliseconds: 1200));
-              //         },
-              //         child: Text("跳几秒")),
-              //   ],
-              // )
-            ],
-          ),
-        );
-      },
+            ),
     );
   }
 }

@@ -777,14 +777,15 @@ class Tracks {
     sId = json['s_id'];
     mark = json['mark'];
     originCoverType = json['originCoverType'];
-    originSongSimpleData = json['originSongSimpleData'];
+    originSongSimpleData = json['originSongSimpleData'] != null ? OriginSongSimpleData.fromJson(json['originSongSimpleData']) : null;
     tagPicList = json['tagPicList'];
     resourceState = json['resourceState'];
     version = json['version'];
     songJumpInfo = json['songJumpInfo'];
     entertainmentTags = json['entertainmentTags'];
     single = json['single'];
-    noCopyrightRcmd = json['noCopyrightRcmd'];
+    // noCopyrightRcmd = json['noCopyrightRcmd'];
+    noCopyrightRcmd = "";
     rtype = json['rtype'];
     rurl = json['rurl'];
     mst = json['mst'];
@@ -824,7 +825,7 @@ class Tracks {
   int? sId;
   int? mark;
   int? originCoverType;
-  String? originSongSimpleData;
+  OriginSongSimpleData? originSongSimpleData;
   String? tagPicList;
   bool? resourceState;
   int? version;
@@ -938,7 +939,7 @@ class Hr {
   int? br;
   int? fid;
   int? size;
-  int? vd;
+  num? vd;
   int? sr;
 
   Map<String, dynamic> toJson() {
@@ -982,7 +983,7 @@ class Sq {
   int? br;
   int? fid;
   int? size;
-  int? vd;
+  num? vd;
   int? sr;
 
   Map<String, dynamic> toJson() {
@@ -1026,7 +1027,7 @@ class L {
   int? br;
   int? fid;
   int? size;
-  int? vd;
+  num? vd;
   int? sr;
 
   Map<String, dynamic> toJson() {
@@ -1070,7 +1071,7 @@ class M {
   int? br;
   int? fid;
   int? size;
-  int? vd;
+  num? vd;
   int? sr;
 
   Map<String, dynamic> toJson() {
@@ -1114,7 +1115,7 @@ class H {
   int? br;
   int? fid;
   int? size;
-  int? vd;
+  num? vd;
   int? sr;
 
   Map<String, dynamic> toJson() {
@@ -1578,6 +1579,115 @@ class Subscribers {
     map['avatarImgIdStr'] = avatarImgIdStr;
     map['anchor'] = anchor;
     map['avatarImgId_str'] = avatarImgIdStr;
+    return map;
+  }
+}
+
+/// songId : 536622304
+/// name : "Lemon"
+/// artists : [{"id":159300,"name":"米津玄師"}]
+/// albumMeta : {"id":37575103,"name":"Lemon"}
+
+OriginSongSimpleData testFromJson(String str) =>
+    OriginSongSimpleData.fromJson(json.decode(str));
+
+String testToJson(OriginSongSimpleData data) => json.encode(data.toJson());
+
+class OriginSongSimpleData {
+  OriginSongSimpleData({
+    this.songId,
+    this.name,
+    this.artists,
+    this.albumMeta,
+  });
+
+  OriginSongSimpleData.fromJson(dynamic json) {
+    songId = json['songId'];
+    name = json['name'];
+    if (json['artists'] != null) {
+      artists = [];
+      json['artists'].forEach((v) {
+        artists?.add(Artists.fromJson(v));
+      });
+    }
+    albumMeta = json['albumMeta'] != null
+        ? AlbumMeta.fromJson(json['albumMeta'])
+        : null;
+  }
+
+  int? songId;
+  String? name;
+  List<Artists>? artists;
+  AlbumMeta? albumMeta;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['songId'] = songId;
+    map['name'] = name;
+    if (artists != null) {
+      map['artists'] = artists?.map((v) => v.toJson()).toList();
+    }
+    if (albumMeta != null) {
+      map['albumMeta'] = albumMeta?.toJson();
+    }
+    return map;
+  }
+}
+
+/// id : 37575103
+/// name : "Lemon"
+
+AlbumMeta albumMetaFromJson(String str) => AlbumMeta.fromJson(json.decode(str));
+
+String albumMetaToJson(AlbumMeta data) => json.encode(data.toJson());
+
+class AlbumMeta {
+  AlbumMeta({
+    this.id,
+    this.name,
+  });
+
+  AlbumMeta.fromJson(dynamic json) {
+    id = json['id'];
+    name = json['name'];
+  }
+
+  int? id;
+  String? name;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['name'] = name;
+    return map;
+  }
+}
+
+/// id : 159300
+/// name : "米津玄師"
+
+Artists artistsFromJson(String str) => Artists.fromJson(json.decode(str));
+
+String artistsToJson(Artists data) => json.encode(data.toJson());
+
+class Artists {
+  Artists({
+    this.id,
+    this.name,
+  });
+
+  Artists.fromJson(dynamic json) {
+    id = json['id'];
+    name = json['name'];
+  }
+
+  int? id;
+  String? name;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['name'] = name;
     return map;
   }
 }

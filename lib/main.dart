@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
   static final kazePlayer = AudioPlayer();
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: '网易云音乐TV超级青春版',
+        navigatorKey:navigatorKey,
         theme: ThemeData(
           primarySwatch: Colors.blue,
           brightness: Brightness.dark,
@@ -46,7 +48,6 @@ class MyApp extends StatelessWidget {
                     Expanded(child: child!),
                     const SizedBox(
                       height: 100,
-                      // color: Colors.red,
                       width: double.infinity,
                       child: PlayController(),
                     )

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:net_ease_cloud_music_tv/page/home/main.dart';
 import 'package:net_ease_cloud_music_tv/page/login/main.dart';
 import 'package:net_ease_cloud_music_tv/page/playlist/main.dart';
+import 'package:net_ease_cloud_music_tv/page/playlist/play_controller.dart';
 import 'package:net_ease_cloud_music_tv/page/playlist/play_interface.dart';
 
 import '../page/playlist/list_detail.dart';
@@ -17,6 +18,7 @@ class KazeRouter {
         ListDetail(playListId: arguments),
     PlayInterface.routerName: (context, {arguments}) =>
         PlayInterface(songIndex: arguments),
+    PlayController.routerName: (context) => const PlayController(),
   };
 
   static Route routeGenerator(RouteSettings settings) {

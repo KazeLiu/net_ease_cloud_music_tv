@@ -45,9 +45,11 @@ class _ListDetailState extends State<ListDetail> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PlayProvider>(
+    return Selector<PlayProvider, PlayAndSongModel>(
+      selector: (ctx, select) => select.playAndSongModel,
+      shouldRebuild: (_old, _new) => true,
       builder: (ctx, data, _) {
-        if (data.playAndSongModel.playlistImage == null) {
+        if (data.playlistImage == null) {
           return const Center(
               child: Text(
             "加载中……",
@@ -67,7 +69,7 @@ class _ListDetailState extends State<ListDetail> {
                     children: [
                       Row(
                         children: [
-                          Image.network(data.playAndSongModel.playlistImage!),
+                          Image.network(data.playlistImage!),
                           const SizedBox(
                             width: 30,
                           ),
@@ -76,7 +78,7 @@ class _ListDetailState extends State<ListDetail> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                data.playAndSongModel.playlistName!,
+                                data.playlistName!,
                                 style: KazeFontStyles.text30CW,
                               ),
                               const SizedBox(
@@ -85,22 +87,20 @@ class _ListDetailState extends State<ListDetail> {
                               Row(
                                 children: [
                                   CircleAvatar(
-                                    backgroundImage: NetworkImage(data
-                                        .playAndSongModel.playlistAuthorImage!),
+                                    backgroundImage:
+                                        NetworkImage(data.playlistAuthorImage!),
                                   ),
                                   const SizedBox(
                                     width: 10,
                                   ),
-                                  Text(
-                                      '创建人：${data.playAndSongModel.playlistAuthorName}',
+                                  Text('创建人：${data.playlistAuthorName}',
                                       style: KazeFontStyles.text20C),
                                 ],
                               ),
                               const SizedBox(
                                 height: 2,
                               ),
-                              Text(
-                                  '创建时间：${data.playAndSongModel.playlistCreateTime}',
+                              Text('创建时间：${data.playlistCreateTime}',
                                   style: KazeFontStyles.text18C),
                               const SizedBox(
                                 height: 2,
@@ -121,12 +121,11 @@ class _ListDetailState extends State<ListDetail> {
                 height: 30,
               ),
               Expanded(
-                child: data.playAndSongModel == null
+                child: data == null
                     ? Container()
                     : GridView.builder(
                         shrinkWrap: true,
-                        itemCount: data
-                            .playAndSongModel.playDetailSongDetailModel?.length,
+                        itemCount: data.playDetailSongDetailModel?.length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 4,
@@ -135,8 +134,7 @@ class _ListDetailState extends State<ListDetail> {
                                 childAspectRatio: 1),
                         itemBuilder: (ctx, index) {
                           PlayDetailSongDetailModel playDetailSongDetailModel =
-                              data.playAndSongModel
-                                  .playDetailSongDetailModel![index];
+                              data.playDetailSongDetailModel![index];
                           return GestureDetector(
                             onTap: () {
                               Navigator.of(context).pushNamed(

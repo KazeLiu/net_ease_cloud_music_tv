@@ -108,7 +108,7 @@ class Data {
   int? code;
   int? expi;
   String? type;
-  double? gain;
+  num? gain;
   int? fee;
   dynamic uf;
   int? payed;

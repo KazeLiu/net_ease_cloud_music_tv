@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:net_ease_cloud_music_tv/main.dart';
 import 'package:net_ease_cloud_music_tv/page/home/home_user_card.dart';
 import 'package:net_ease_cloud_music_tv/page/login/main.dart';
 import 'package:net_ease_cloud_music_tv/provider/user_provider.dart';

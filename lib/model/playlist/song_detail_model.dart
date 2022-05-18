@@ -595,7 +595,7 @@ class Sq {
   int? br;
   int? fid;
   int? size;
-  int? vd;
+  num? vd;
   int? sr;
 
   Map<String, dynamic> toJson() {
@@ -639,7 +639,7 @@ class L {
   int? br;
   int? fid;
   int? size;
-  int? vd;
+  num? vd;
   int? sr;
 
   Map<String, dynamic> toJson() {
@@ -683,7 +683,7 @@ class M {
   int? br;
   int? fid;
   int? size;
-  int? vd;
+  num? vd;
   int? sr;
 
   Map<String, dynamic> toJson() {
@@ -727,7 +727,7 @@ class H {
   int? br;
   int? fid;
   int? size;
-  int? vd;
+  num? vd;
   int? sr;
 
   Map<String, dynamic> toJson() {

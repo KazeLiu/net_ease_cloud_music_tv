@@ -77,7 +77,9 @@ class PlayProvider with ChangeNotifier {
 
   set playingSongData(PlayDetailSongDetailModel value) {
     _playingSongData = value;
-    Future.delayed(Duration(milliseconds: 200))
-        .then((value) => notifyListeners());
+
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      notifyListeners();
+    });
   }
 }
