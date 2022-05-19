@@ -75,8 +75,10 @@ class _LoginByQRState extends State<LoginByQR> {
         // 存cookies
         HttpClass.init();
         kazeEventBus.fire(ChangeCookie(qrCreateModel.cookie!));
-        KazePreferences().saveString(key: "cookie", value: qrCreateModel.cookie);
-        Navigator.pushNamed(context, Home.routerName,arguments: true);
+        KazePreferences()
+            .saveString(key: "cookie", value: qrCreateModel.cookie);
+        // todo 以后换成pop试试
+        Navigator.pushNamed(context, Home.routerName, arguments: true);
       } else if (qrCreateModel.code == 801) {
         setState(() {
           infoText = '扫码后请耐心等待一分钟左右，于${DateTime.now()}获取了一次状态，请继续等待';

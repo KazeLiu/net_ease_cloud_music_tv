@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:net_ease_cloud_music_tv/main.dart';
 import 'package:net_ease_cloud_music_tv/page/playlist/play_interface.dart';
+import 'package:net_ease_cloud_music_tv/tool/common.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/playlist/play_and_song_model.dart';
@@ -23,14 +24,24 @@ class _PlayControllerState extends State<PlayController> {
   }
 
   bool playState = false;
+  String nowTime = "00:00:00";
+  String allTime = "00:00:00";
 
   _init() {
     MyApp.kazePlayer.playerStateStream.listen((state) {
       setState(() {
         playState = state.playing;
+        if (MyApp.kazePlayer.duration != null) {
+          int seconds = MyApp.kazePlayer.duration!.inSeconds;
+          allTime = KazeCommon.durationTransform(seconds, type: 1);
+        }
       });
-      // print(state.playing.toString());
-      // print(state.processingState.toString());
+    });
+
+    MyApp.kazePlayer.positionStream.listen((time) {
+      setState(() {
+        nowTime = KazeCommon.durationTransform(time.inSeconds, type: 1);
+      });
     });
   }
 
@@ -40,7 +51,12 @@ class _PlayControllerState extends State<PlayController> {
       selector: (context, model) => model.playingSongData,
       builder: (ctx, data, _) {
         if (data.songName == null) {
-          return Container();
+          return Container(
+            width: double.infinity,
+            color: Colors.black87,
+            height: 100,
+            child: const Center(child: Text("请先选择歌曲")),
+          );
         } else {
           return Column(
             children: [
@@ -59,6 +75,12 @@ class _PlayControllerState extends State<PlayController> {
                       child: GestureDetector(
                         onTap: () {
                           // 判断路由
+                          Route? _route;
+                          MyApp.navigatorKey.currentState?.popUntil((route) {
+                            _route = route;
+                            return true;
+                          });
+                          print(_route?.settings.name);
                           MyApp.navigatorKey.currentState?.pushNamed(
                               PlayInterface.routerName,
                               arguments: -1);
@@ -98,7 +120,7 @@ class _PlayControllerState extends State<PlayController> {
                         children: [
                           _PlayControllerBtn(),
                           // Text("进度条"),
-                          Text("00:00:00/00:00:00")
+                          Text("${nowTime}/${allTime}")
                         ],
                       ),
                     ),

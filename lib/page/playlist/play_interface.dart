@@ -21,11 +21,16 @@ class _PlayInterfaceState extends State<PlayInterface> {
 
   @override
   initState() {
-    // 判断是否在播放 在播放就不请求 没播放就请求播放
-    if (kazePlayer.playerState.playing) {
-    } else {
-      _playOneSong();
-    }
+   if(widget.songIndex != -1){
+     _playOneSong();
+   }else{
+     // if (kazePlayer.playerState.playing) {
+     //   // 在播放且是底部栏来
+     // } else {
+     //   _playOneSong();
+     // }
+   }
+
     // _getSongListen();
     super.initState();
   }
@@ -81,7 +86,7 @@ class _PlayInterfaceState extends State<PlayInterface> {
                           child: Image.network(data.songImage!),
                         ),
                       ),
-                      Expanded(flex: 1, child: Text("歌词"))
+                      // Expanded(flex: 1, child: Text("歌词"))
                     ],
                   ),
                 ],
