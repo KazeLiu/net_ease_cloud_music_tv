@@ -31,3 +31,19 @@ class KazeFontStyles {
   static const text36CW = TextStyle(
       fontSize: 36, color: KazeColors.FontColor, fontWeight: FontWeight.bold);
 }
+
+class KazeButtonStyle{
+  static ButtonStyle buttonStyle = ButtonStyle(
+    //背景颜色
+    backgroundColor: MaterialStateProperty.resolveWith(
+          (states) {
+        //默认不使用背景颜色
+        return const Color(0xFF2C2C2C);
+      },
+    ),
+    foregroundColor:
+    MaterialStateProperty.resolveWith((states) {
+      return KazeColors.FontColor;
+    }),
+  );
+}

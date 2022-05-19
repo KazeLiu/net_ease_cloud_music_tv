@@ -109,9 +109,25 @@ class _ListDetailState extends State<ListDetail> {
                           )
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Text("全部播放"),
+                      Row(
+                        children: [
+                          ElevatedButton.icon(
+                              onPressed: () {},
+                              style: KazeButtonStyle.buttonStyle,
+                              icon: const Icon(Icons.description),
+                              label: const Text("查看描述")),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          ElevatedButton.icon(
+                              onPressed: () {},
+                              style: KazeButtonStyle.buttonStyle,
+                              icon: const Icon(Icons.play_circle_fill),
+                              label: const Text("播放全部")),
+                          const SizedBox(
+                            width: 20,
+                          )
+                        ],
                       )
                     ],
                   ),
