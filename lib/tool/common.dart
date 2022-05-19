@@ -1,4 +1,4 @@
-class KazeTool {
+class KazeCommon {
   static String durationTransform(int seconds) {
     var d = Duration(seconds: seconds);
     List<String> parts = d.toString().split(':');

@@ -9,9 +9,9 @@ import '../page/playlist/list_detail.dart';
 
 class KazeRouter {
   static final Map<String, WidgetBuilder> routes = {
-    "/": (context) => LoginByQR(),
+    "/": (context) => Home(isLogin: false),
     LoginByQR.routerName: (ctx) => LoginByQR(),
-    Home.routerName: (ctx) => Home(),
+    Home.routerName: (ctx, {arguments}) => Home(isLogin: arguments),
     PlayList.routerName: (context, {arguments}) =>
         PlayList(listType: arguments),
     ListDetail.routerName: (context, {arguments}) =>
@@ -38,7 +38,7 @@ class KazeRouter {
         return route;
       }
     } else {
-      return MaterialPageRoute(builder: (context) => Home());
+      return MaterialPageRoute(builder: (context) => Home(isLogin: false));
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:event_bus/event_bus.dart';
+import 'package:net_ease_cloud_music_tv/tool/persistence.dart';
 
 import '../model/playlist/play_and_song_model.dart';
 
@@ -8,13 +9,14 @@ EventBus kazeEventBus = EventBus();
 
 class ChangeCookie {
   String cookie;
+  Cookie? cookieMap;
 
   ChangeCookie(this.cookie) {
     stringCookieToMap();
   }
 
   // MUSIC_R_T=1405211128424; Max-Age=2147483647; Expires=Sat, 03 Jun 2090 06:45:33 GMT; Path=/eapi/clientlog; HTTPOnly;MUSIC_R_T=1405211128424; Max-Age=2147483647; Expires=Sat, 03 Jun 2090 06:45:33 GMT; Path=/neapi/feedback; HTTPOnly;MUSIC_R_T=1405211128424; Max-Age=2147483647; Expires=Sat, 03 Jun 2090 06:45:33 GMT; Path=/weapi/feedback; HTTPOnly;MUSIC_A_T=1405209329000; Max-Age=2147483647; Expires=Sat, 03 Jun 2090 06:45:33 GMT; Path=/api/feedback; HTTPOnly;MUSIC_R_T=1405211128424; Max-Age=2147483647; Expires=Sat, 03 Jun 2090 06:45:33 GMT; Path=/eapi/feedback; HTTPOnly;MUSIC_R_T=1405211128424; Max-Age=2147483647; Expires=Sat, 03 Jun 2090 06:45:33 GMT; Path=/wapi/clientlog; HTTPOnly;MUSIC_A_T=1405209329000; Max-Age=2147483647; Expires=Sat, 03 Jun 2090 06:45:33 GMT; Path=/wapi/feedback; HTTPOnly;MUSIC_U=5fbd7494390cdd693471401fda14c732e84f758a4d692e215c9ebd55f37d9b95993166e004087dd30ef37ab071ac646641e3ee32833518c657655c97021ab67dcb78fc60efaf376c1b93ac14e0ed86ab; Max-Age=15552000; Expires=Sat, 12 Nov 2022 03:31:26
-  stringCookieToMap() {
+  stringCookieToMap() async {
     List<String> list = cookie.split(";");
     Map<String, String> cookieList = {};
     list.forEach((item) {
@@ -23,10 +25,7 @@ class ChangeCookie {
         cookieList[keyValue[0]] = keyValue[1];
       }
     });
-
     // 暂时只需要这一个 现在只给这个
-    return Cookie("MUSIC_U", cookieList['MUSIC_U']!);
+    cookieMap = Cookie("MUSIC_U", cookieList['MUSIC_U']!);
   }
-
 }
-

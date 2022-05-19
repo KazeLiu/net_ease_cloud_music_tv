@@ -1,10 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:net_ease_cloud_music_tv/model/playlist/play_detail_model.dart';
 import 'package:net_ease_cloud_music_tv/model/playlist/play_listen_model.dart';
 import 'package:net_ease_cloud_music_tv/model/playlist/song_detail_model.dart';
 
 import '../model/playlist/play_and_song_model.dart';
-import '../tool/tool.dart';
+import '../tool/common.dart';
 
 class PlayProvider with ChangeNotifier {
   //  歌单和歌曲信息
@@ -53,7 +55,7 @@ class PlayProvider with ChangeNotifier {
               .firstWhere((song) => song.id == playDetailSongDetailModel.songID)
               .url;
       playDetailSongDetailModel.songTime =
-          KazeTool.durationTransform(songDetail.dt! ~/ 1000);
+          KazeCommon.durationTransform(songDetail.dt! ~/ 1000);
       _playAndSongModel.playDetailSongDetailModel!
           .add(playDetailSongDetailModel);
     });

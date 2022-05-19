@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: '网易云音乐TV超级青春版',
-        navigatorKey:navigatorKey,
+        navigatorKey: navigatorKey,
         theme: ThemeData(
           primarySwatch: Colors.blue,
           brightness: Brightness.dark,

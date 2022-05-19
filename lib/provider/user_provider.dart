@@ -28,10 +28,9 @@ class UserProvider with ChangeNotifier {
         .toList();
     if (playList != null) {
       if (type == 0) {
-        _userPlaylistModelType.playlist = [playList[0]];
+        // _userPlaylistModelType.playlist = [playList[0]];
       } else if (type == 1) {
-        _userPlaylistModelType.playlist =
-            playList.sublist(1, playList.length - 1);
+        _userPlaylistModelType.playlist = playList;
       } else if (type == 2) {
         _userPlaylistModelType.playlist = _userPlaylistModel.playlist
             ?.where((element) => element.userId != userID)

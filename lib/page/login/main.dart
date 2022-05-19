@@ -25,7 +25,7 @@ class LoginByQR extends StatefulWidget {
 class _LoginByQRState extends State<LoginByQR> {
   @override
   void initState() {
-    _checkLogin();
+    _getQrKey();
     super.initState();
   }
 
@@ -33,17 +33,16 @@ class _LoginByQRState extends State<LoginByQR> {
   String infoText = "扫码后请耐心等待一分钟左右";
   Uint8List? decodeTxt;
 
-  _checkLogin() async {
-    String cookie = await KazePreferences().getString(key: 'cookie');
-    if (cookie.isEmpty) {
-      _getQrKey();
-    } else {
-      HttpClass();
-      kazeEventBus.fire(ChangeCookie(cookie));
-      Navigator.pushNamed(context, Home.routerName);
-      // _getQrStatus(cookie);
-    }
-  }
+  // _checkLogin() async {
+  //   String cookie = await KazePreferences().getString(key: 'cookie');
+  //   if (cookie.isEmpty) {
+  //
+  //   } else {
+  //     HttpClass();
+  //     kazeEventBus.fire(ChangeCookie(cookie));
+  //     Navigator.pushNamed(context, Home.routerName);
+  //   }
+  // }
 
   _getQrStatus(cookie) async {
     LoginStatus loginStatus = await QRLogin.getQrStatus();
@@ -74,11 +73,10 @@ class _LoginByQRState extends State<LoginByQR> {
       if (qrCreateModel.code == 803) {
         timer.cancel();
         // 存cookies
-        HttpClass();
+        HttpClass.init();
         kazeEventBus.fire(ChangeCookie(qrCreateModel.cookie!));
-        KazePreferences()
-            .saveString(key: "cookie", value: qrCreateModel.cookie);
-        Navigator.pushNamed(context, Home.routerName);
+        KazePreferences().saveString(key: "cookie", value: qrCreateModel.cookie);
+        Navigator.pushNamed(context, Home.routerName,arguments: true);
       } else if (qrCreateModel.code == 801) {
         setState(() {
           infoText = '扫码后请耐心等待一分钟左右，于${DateTime.now()}获取了一次状态，请继续等待';

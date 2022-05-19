@@ -35,7 +35,7 @@ class _PlayInterfaceState extends State<PlayInterface> {
     var playProvider = Provider.of<PlayProvider>(context, listen: false);
     playProvider.playingSongData = playProvider
         .playAndSongModel.playDetailSongDetailModel![widget.songIndex];
-    await kazePlayer.setUrl(model.playUrl!);
+    await kazePlayer.setUrl(playProvider.playingSongData.playUrl!);
     await kazePlayer.play();
   }
 
@@ -78,14 +78,10 @@ class _PlayInterfaceState extends State<PlayInterface> {
                         child: SizedBox(
                           width: 300,
                           height: 300,
-                          child: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                              data.songImage!,
-                            ),
-                          ),
+                          child: Image.network(data.songImage!),
                         ),
                       ),
-                      // Expanded(flex: 1, child: Text("歌词"))
+                      Expanded(flex: 1, child: Text("歌词"))
                     ],
                   ),
                 ],

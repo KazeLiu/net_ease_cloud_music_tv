@@ -12,15 +12,11 @@ class HttpConfig {
 }
 
 class HttpClass {
-  HttpClass() {
-    init();
-  }
-
   static final CookieJar cookieJar = CookieJar();
 
-  init() {
+  static init() {
     kazeEventBus.on<ChangeCookie>().listen((event) {
-      List<Cookie> cookies = [event.stringCookieToMap()];
+      List<Cookie> cookies = [event.cookieMap!];
       cookieJar.saveFromResponse(Uri.parse(HttpConfig.serverBaseUrl), cookies);
       print(cookies);
     });
