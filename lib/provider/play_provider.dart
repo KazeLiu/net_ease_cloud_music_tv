@@ -39,27 +39,42 @@ class PlayProvider with ChangeNotifier {
       PlayDetailSongDetailModel playDetailSongDetailModel =
           PlayDetailSongDetailModel();
       playDetailSongDetailModel.songID = songDetail.id!;
-      playDetailSongDetailModel.songAlbum = songDetail.cd;
+      playDetailSongDetailModel.songAlbum = songDetail.al?.name;
       playDetailSongDetailModel.songAuthorName =
           songDetail.ar?.map((e) => e.name).join("/");
       playDetailSongDetailModel.songImage = songDetail.al?.picUrl;
-      playDetailSongDetailModel.songAlia = (songDetail.alia != null &&
-              songDetail.alia!.isNotEmpty &&
-              songDetail.alia![0] != songDetail.name)
-          ? songDetail.alia![0]
-          : "";
+      playDetailSongDetailModel.songAlia = _getSongAlia(songDetail);
       playDetailSongDetailModel.songName = songDetail.name;
-      playDetailSongDetailModel.playUrl = playListenModel.data == null
-          ? ""
-          : playListenModel.data!
-              .firstWhere((song) => song.id == playDetailSongDetailModel.songID)
-              .url;
+      playDetailSongDetailModel.playUrl =
+          _getSongUrl(playDetailSongDetailModel.songID, playListenModel);
       playDetailSongDetailModel.songTime =
           KazeCommon.durationTransform(songDetail.dt! ~/ 1000);
       _playAndSongModel.playDetailSongDetailModel!
           .add(playDetailSongDetailModel);
     });
     notifyListeners();
+  }
+
+  _getSongUrl(id, PlayListenModel playListenModel) {
+    if (playListenModel.data == null) {
+      return null;
+    } else {
+      String? url =
+          playListenModel.data!.firstWhere((song) => song.id == id).url;
+      if (url == null) {
+        return null;
+      } else {
+        return url;
+      }
+    }
+  }
+
+  _getSongAlia(songDetail) {
+    return (songDetail.alia != null &&
+            songDetail.alia!.isNotEmpty &&
+            songDetail.alia![0] != songDetail.name)
+        ? songDetail.alia![0]
+        : "";
   }
 
   //  歌曲信息
@@ -80,7 +95,7 @@ class PlayProvider with ChangeNotifier {
   set playingSongData(PlayDetailSongDetailModel value) {
     _playingSongData = value;
 
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       notifyListeners();
     });
   }

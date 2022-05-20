@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:net_ease_cloud_music_tv/page/playlist/play_interface.dart';
 import 'package:net_ease_cloud_music_tv/request/play_request.dart';
 import 'package:net_ease_cloud_music_tv/tool/color.dart';
@@ -112,15 +113,66 @@ class _ListDetailState extends State<ListDetail> {
                       Row(
                         children: [
                           ElevatedButton.icon(
-                              onPressed: () {},
-                              style: KazeButtonStyle.buttonStyle,
-                              icon: const Icon(Icons.description),
-                              label: const Text("查看描述")),
+                            onPressed: () {
+                              SmartDialog.show(
+                                alignment: Alignment.center,
+                                clickMaskDismiss: false,
+                                maskColor: const Color(0xFF424242),
+                                builder: (_) {
+                                  return Container(
+                                    color: Colors.black,
+                                    padding: const EdgeInsets.all(10),
+                                    child: Column(
+                                      children: [
+                                        const Text(
+                                          "歌单描述",
+                                          style: KazeFontStyles.text30C,
+                                        ),
+                                        Container(
+                                          height: 3,
+                                          color: const Color(0xFFE60026),
+                                        ),
+                                        Expanded(
+                                          child: SingleChildScrollView(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                '${data.playlistDescription == "" || data.playlistDescription == null ? "‘他貌似什么都没写呢’" : data.playlistDescription}',
+                                                style: KazeFontStyles.text16C,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            SmartDialog.dismiss();
+                                          },
+                                          child: const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text("关闭"),
+                                          ),
+                                          style: KazeButtonStyle.buttonStyle,
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            style: KazeButtonStyle.buttonStyle,
+                            icon: const Icon(Icons.description),
+                            label: const Text("查看描述"),
+                          ),
                           const SizedBox(
                             width: 10,
                           ),
                           ElevatedButton.icon(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).pushNamed(
+                                    PlayInterface.routerName,
+                                    arguments: 0);
+                              },
                               style: KazeButtonStyle.buttonStyle,
                               icon: const Icon(Icons.play_circle_fill),
                               label: const Text("播放全部")),
@@ -223,12 +275,6 @@ class _ListDetailState extends State<ListDetail> {
                                             textAlign: TextAlign.left,
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 1),
-                                        // Text(playDetailSongDetailModel.songAlbum!,
-                                        //     style: KazeFontStyles.text16C,
-                                        //     softWrap: true,
-                                        //     textAlign: TextAlign.left,
-                                        //     overflow: TextOverflow.ellipsis,
-                                        //     maxLines: 1),
                                         playDetailSongDetailModel.songAlia == ""
                                             ? Container()
                                             : Text(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:net_ease_cloud_music_tv/page/playlist/play_controller.dart';
 import 'package:net_ease_cloud_music_tv/provider/play_provider.dart';
 import 'package:net_ease_cloud_music_tv/provider/user_provider.dart';
@@ -11,6 +13,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.landscapeLeft]);
+  await JustAudioBackground.init(
+    androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
+    androidNotificationChannelName: 'Audio playback',
+    androidNotificationOngoing: true,
+  );
   runApp(MyApp());
 }
 
@@ -38,7 +45,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           brightness: Brightness.dark,
         ),
-        builder: (ctx, child) {
+        navigatorObservers: [FlutterSmartDialog.observer],
+        builder: FlutterSmartDialog.init(builder: (ctx, child) {
           return SafeArea(
             child: Scaffold(
               body: Container(
@@ -56,7 +64,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
           );
-        },
+        }),
         // routes: KazeRouter.routes,
         onGenerateRoute: KazeRouter.routeGenerator,
         initialRoute: "/",

@@ -44,6 +44,8 @@ dependencies:
   just_audio: ^0.9.21
   just_audio_background: ^0.0.1-beta.5
   just_waveform: ^0.0.2
+  flutter_smart_dialog: ^4.3.1
+  audio_video_progress_bar: ^0.10.0
 
 dev_dependencies:
   flutter_test:
